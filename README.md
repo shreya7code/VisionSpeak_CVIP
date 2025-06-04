@@ -1,56 +1,73 @@
 # VisionSpeak
-AI-Powered Multi-Language OCR with Instant Summarization &amp; Speech
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**VisionSpeak** is an AI-powered multimodal pipeline that integrates Optical Character Recognition (OCR), language detection, text summarization, and Text-to-Speech (TTS) into a seamless system. It is built to assist users with visual impairments or language barriers by extracting and vocalizing multilingual handwritten text from documents and forms.
 
-Project Information: Web Application Featuring Optical Character Recognition, Language Detection, Summarization and Text-to-Speech Functionality 
+---
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## 🌟 Core Features
 
-Need to Work: 
-1) We need to detect various types of languages (Unsupported & Supported) with OCR.  ( Major Work)
-2) Gather Dataset 
-3) Pre-process Dataset 
-4) Prepare the dataset for training 
+- 🖋️ **Handwritten Text Recognition** using a fine-tuned `microsoft/trocr-base-handwritten` Transformer model.
+- 🌍 **Auto Language Detection** with FastText to support multilingual content.
+- 🧠 **Contextual Summarization** using T5 to extract meaningful gist from recognized content.
+- 🗣️ **Natural Speech Output** through Mozilla TTS for personalized, clear, and multilingual voice support.
+- 🧩 **Modular Pipeline** that connects OCR → Language Detection → Summarization → TTS in real time.
 
-Add to report: scalable ML pipeline for real-time document processing in enterprises for accessibility and workflow optimization.
+---
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## 🏗️ Architecture Overview
 
-For Unsupported Language: Use fasttext (unpopular language detection) --> NLLB (unpopular lang translation to eng ) ---> T5 / ( Summerization in English and using TTS.api voice synthesis in English) ----> NLLB ( Convert to unpopular lang).
+- **Vision Encoder**: ViT-based encoder from TrOCR to extract visual features.
+- **Text Decoder**: GPT-style decoder to transcribe visual inputs into text.
+- **Tokenizer**: Custom character-level tokenizer for handling multilingual handwritten data.
+- **Pipeline**:
+  1. Image preprocessing (grayscale, padding, normalization)
+  2. OCR (TrOCR-based transcription)
+  3. Language detection (FastText)
+  4. Translation (NLLB if needed)
+  5. Summarization (T5)
+  6. Text-to-Speech (Mozilla TTS)
 
-Popular language / Supported by t5: We will directly call the required models which is best suited for the specific language by passing it as a parameter.
+---
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## 📊 Evaluation Metrics
 
-Planned OCR Network Architecture (Final Model)
+| Task              | Metric                | Target            |
+|-------------------|------------------------|--------------------|
+| OCR               | Character Error Rate (CER), Word Error Rate (WER) | CER ≤ 5% |
+| Summarization     | ROUGE Score            | ROUGE ≥ 0.8        |
+| Speech Generation | Mean Opinion Score (MOS) | MOS ≥ 4.5 / 5     |
+| Real-Time Response| Processing Time        | OCR ≤ 1s/page, Summarization ≤ 3s/500 tokens |
 
-✅ Final Model: ResNet-100 + CRNN + BiLSTM + CTC
-	•	Network Architecture:
-	•	ResNet-100 (Deep CNN) as a feature extractor (captures text patterns and structures).
-	•	CRNN (Convolutional Recurrent Neural Network) for sequence modeling.
-	•	BiLSTM (Bidirectional Long Short-Term Memory) to handle context in handwritten & multi-line text.
-	•	CTC (Connectionist Temporal Classification) Loss for end-to-end text decoding.
-Why This Model?
-	•	Strong performance on both printed and handwritten text.
-	•	Handles noisy, distorted, and irregular layouts better than traditional OCR.
-	•	Comparison with ResNet-50 + CRNN evaluates the impact of depth on OCR accuracy.
+---
 
-1️⃣ Baseline Model 1: ResNet-50 + CRNN + BiLSTM + CTC
-	•	Network Architecture:
-	•	ResNet-50 (CNN) as a shallower feature extractor.
-	•	CRNN + BiLSTM + CTC for text sequence modeling (same as the final model).
-	•	Purpose of Comparison:
-	•	Tests how network depth impacts OCR performance.
-	•	Helps determine if ResNet-100’s additional complexity is justified.
-	•	Measures trade-offs in accuracy vs. computational cost.
+## ✅ Positive Test Cases
 
-2️⃣ Baseline Model 2: TrOCR (Transformer-Based OCR)
-	•	Network Architecture:
-	•	ViT (Vision Transformer) Encoder replaces CNN for feature extraction.
-	•	Transformer Decoder for text sequence generation (similar to GPT).
-	•	Purpose of Comparison:
-	•	Tests whether CNN + LSTM (ResNet-100 + CRNN) or Transformers generalize better for OCR tasks.
-	•	Evaluates state-of-the-art Transformer-based OCR.
-	•	Stronger on printed text but requires higher computational power.
+- High-resolution handwritten forms with clean structure
+- Monolingual and well-formatted content
+- Common languages supported by TTS engine
+
+## ⚠️ Failure Scenarios
+
+- Noisy, low-resolution, or distorted handwriting
+- Mixed-language paragraphs with abrupt switches
+- Technical documents with domain-specific jargon
+- Rare dialects not supported by TTS, leading to robotic pronunciation
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/VisionSpeak.git
+   cd VisionSpeak
+
+2. Install Dependecies:
+   ```bash
+   pip install -r requirements.txt
+
+3. Run the application:
+   ```bash
+   python app.py
+
 
