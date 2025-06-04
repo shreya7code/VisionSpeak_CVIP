@@ -59,8 +59,8 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/VisionSpeak.git
-   cd VisionSpeak
+   git clone https://github.com/shreya7code/VisionSpeak_CVIP.git
+   cd VisionSpeak_CVIP
 
 2. Install Dependecies:
    ```bash
