@@ -1,0 +1,15 @@
+streamlit
+opencv-python
+torch
+torchvision
+numpy
+Pillow
+transformers
+sentencepiece
+TTS
+gtts
+symspellpy
+jiwer
+matplotlib
+seaborn
+fasttext
